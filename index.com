@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chainivore — Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #1C1C1C;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4rem 2rem;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    .logo-mark {
+      width: 52px;
+      height: 52px;
+      background: #7d3333;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    .wordmark {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 500;
+      color: #F7F6F3;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .tagline {
+      font-size: 0.95rem;
+      color: #888888;
+      margin-bottom: 2.5rem;
+    }
+    .about {
+      max-width: 360px;
+      color: #aaaaaa;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      border-top: 0.5px solid #333;
+      border-bottom: 0.5px solid #333;
+      padding: 1.5rem 0;
+    }
+    .form-row {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      max-width: 360px;
+    }
+    .form-row input {
+      flex: 1;
+      background: #2a2a2a;
+      border: 0.5px solid #3a3a3a;
+      border-radius: 8px;
+      padding: 0 14px;
+      height: 42px;
+      color: #F7F6F3;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.15s;
+      font-family: inherit;
+    }
+    .form-row input::placeholder { color: #555; }
+    .form-row input:focus { border-color: #7d3333; }
+    .form-row button {
+      background: #7d3333;
+      color: #F7F6F3;
+      border: none;
+      border-radius: 8px;
+      padding: 0 20px;
+      height: 42px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .form-row button:hover { background: #5e2626; }
+    .confirm {
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: 0.75rem;
+      min-height: 1rem;
+    }
+    .confirm.show { color: #ffbd59; }
+  </style>
+</head>
+<body>
+  <img src="your-logo.svg" alt="Chainivore" style="height: 52px; margin-bottom: 1.25rem;" />
+  <div class="wordmark">Chainivore</div>
+  <div class="tagline">Something's cooking.</div>
+  <div class="about">
+    Chainivore is the app where your third visit to Olive Garden this month finally counts for something. Log, rate, and obsess over every chain you've conquered. Discover ones you haven't hit yet and see what your friends are devouring. Coming soon.
+  </div>
+  <div class="form-row">
+    <input type="email" id="email-input" placeholder="your@email.com" />
+    <button onclick="handleSubmit()">Notify me</button>
+  </div>
+  <div class="confirm" id="confirm"></div>
+  <script>
+    function handleSubmit() {
+      var v = document.getElementById('email-input').value.trim();
+      var c = document.getElementById('confirm');
+      if (!v || !v.includes('@')) {
+        c.textContent = 'Enter a valid email address.';
+        c.classList.add('show');
+        return;
+      }
+      c.textContent = "You're on the list. We'll be in touch.";
+      c.classList.add('show');
+      document.getElementById('email-input').value = '';
+    }
+    document.getElementById('email-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') handleSubmit();
+    });
+  </script>
+</body>
+</html>
