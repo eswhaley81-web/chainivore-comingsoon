@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chainivore — Coming Soon</title>
+  <meta name="description" content="The app for people who take chain restaurants seriously. Coming soon.">
+
+  <!-- Open Graph -->
+
+  <meta property="og:title" content="Chainivore">
+  <meta property="og:description" content="The app for people who take chain restaurants seriously. Coming soon.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chainivore.com">
+  <!-- <meta property="og:image" content="https://chainivore.com/og-image.png"> -->
+
+  <!-- Twitter -->
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Chainivore">
+  <meta name="twitter:description" content="The app for people who take chain restaurants seriously. Coming soon.">
+  <!-- <meta name="twitter:image" content="https://chainivore.com/og-image.png"> -->
+
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,11 +38,6 @@
     .logo-mark {
       width: 52px;
       height: 52px;
-      background: #7d3333;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       margin-bottom: 1.25rem;
     }
     .wordmark {
@@ -96,7 +109,7 @@
   </style>
 </head>
 <body>
-  <img src="Chainivore.svg" alt="Chainivore" style="height: 52px; margin-bottom: 1.25rem;" />
+  <img class="logo-mark" src="Chainivore.svg" alt="Chainivore logo" />
   <div class="wordmark">Chainivore</div>
   <div class="tagline">Something's cooking.</div>
   <div class="about">
@@ -104,25 +117,65 @@
   </div>
   <div class="form-row">
     <input type="email" id="email-input" placeholder="your@email.com" />
-    <button onclick="handleSubmit()">Notify me</button>
+    <button id="notify-btn">Notify me</button>
   </div>
   <div class="confirm" id="confirm"></div>
+
   <script>
-    function handleSubmit() {
-      var v = document.getElementById('email-input').value.trim();
+    var SUPABASE_URL = 'https://cupvsxjwgdofcuunbsex.supabase.com';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN1cHZzeGp3Z2RvZmN1dW5ic2V4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Njc5MjIsImV4cCI6MjA5MzE0MzkyMn0.ZG79WsJ_4v0ebK1yHOicmm6h4FTRufEF1jTRFwP1XmY';
+
+    async function handleSubmit() {
+      var email = document.getElementById('email-input').value.trim();
       var c = document.getElementById('confirm');
-      if (!v || !v.includes('@')) {
+      var btn = document.getElementById('notify-btn');
+
+      if (!email || !email.includes('@')) {
         c.textContent = 'Enter a valid email address.';
         c.classList.add('show');
         return;
       }
-      c.textContent = "You're on the list. We'll be in touch.";
-      c.classList.add('show');
-      document.getElementById('email-input').value = '';
+
+      btn.textContent = 'Saving...';
+      btn.disabled = true;
+
+      try {
+        var res = await fetch(SUPABASE_URL + '/rest/v1/waitlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ email: email })
+        });
+
+        if (res.ok) {
+          c.textContent = "You're on the list. We'll be in touch.";
+          c.classList.add('show');
+          document.getElementById('email-input').value = '';
+        } else if (res.status === 409) {
+          c.textContent = "You're already on the list.";
+          c.classList.add('show');
+        } else {
+          c.textContent = 'Something went wrong. Try again.';
+          c.classList.add('show');
+        }
+      } catch (err) {
+        c.textContent = 'Something went wrong. Try again.';
+        c.classList.add('show');
+      }
+
+      btn.textContent = 'Notify me';
+      btn.disabled = false;
     }
+
+    document.getElementById('notify-btn').addEventListener('click', handleSubmit);
     document.getElementById('email-input').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') handleSubmit();
     });
   </script>
+
 </body>
 </html>
