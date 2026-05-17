@@ -1,0 +1,82 @@
+table_name,column_name,data_type,is_nullable,column_default
+chain_names,id,uuid,NO,gen_random_uuid()
+chain_names,name,text,NO,null
+chain_reviews,id,uuid,YES,null
+chain_reviews,chain_id,uuid,YES,null
+chain_reviews,user_id,uuid,YES,null
+chain_reviews,visited_on,date,YES,null
+chain_reviews,rating,numeric,YES,null
+chain_reviews,review,text,YES,null
+chain_reviews,photo_url,text,YES,null
+chain_reviews,menu_items,ARRAY,YES,null
+chain_reviews,created_at,timestamp with time zone,YES,null
+chain_reviews,username,text,YES,null
+chain_reviews,avatar_url,text,YES,null
+chain_reviews,display_name,text,YES,null
+chains,id,uuid,NO,gen_random_uuid()
+chains,name,text,NO,null
+chains,category,ARRAY,NO,'{}'::text[]
+chains,description,text,YES,null
+chains,year_founded,text,YES,null
+chains,founded_city,text,YES,null
+chains,founded_state,text,YES,null
+chains,num_locations,integer,YES,null
+chains,tagline,text,YES,null
+chains,tagline_verified,boolean,YES,false
+chains,has_mascot,boolean,YES,false
+chains,mascot_name,text,YES,null
+chains,fact_1,text,YES,null
+chains,fact_2,text,YES,null
+chains,menu_items,ARRAY,YES,'{}'::text[]
+chains,menu_source,text,YES,null
+chains,logo_url,text,YES,null
+chains,website,text,YES,null
+chains,wikipedia_url,text,YES,null
+chains,flags,ARRAY,YES,'{}'::text[]
+chains,last_updated,timestamp with time zone,YES,null
+chains,clue_1,text,YES,null
+chains,facts,ARRAY,YES,'{}'::text[]
+chains,status,text,NO,'draft'::text
+chains,reject_note,text,YES,null
+chains,reviewed_by,text,YES,null
+chains,reviewed_at,timestamp with time zone,YES,null
+chains,generation_failed,boolean,YES,false
+chains,locked_by,text,YES,null
+chains,locked_at,timestamp with time zone,YES,null
+chains,created_at,timestamp with time zone,YES,now()
+chains,clue_3_override,text,YES,null
+chains,clue_4_override,text,YES,null
+chains,clue_5_override,text,YES,null
+chains,clue_2,text,YES,null
+chains,puzzle_date,date,YES,null
+chains,puzzle_number,integer,YES,null
+chains,banner_url,text,YES,null
+chains,brand_colors,ARRAY,YES,'{}'::text[]
+profiles,id,uuid,NO,null
+profiles,username,text,NO,null
+profiles,display_name,text,YES,null
+profiles,bio,text,YES,null
+profiles,avatar_url,text,YES,null
+profiles,location,text,YES,null
+profiles,top_chains,ARRAY,YES,'{}'::uuid[]
+profiles,created_at,timestamp with time zone,YES,now()
+profiles,updated_at,timestamp with time zone,YES,now()
+profiles,onboarding_complete,boolean,YES,false
+profiles,is_private,boolean,YES,false
+visits,id,uuid,NO,gen_random_uuid()
+visits,user_id,uuid,NO,null
+visits,chain_id,uuid,NO,null
+visits,visited_on,date,NO,CURRENT_DATE
+visits,rating,numeric,YES,null
+visits,review,text,YES,null
+visits,photo_url,text,YES,null
+visits,menu_items,ARRAY,YES,'{}'::text[]
+visits,created_at,timestamp with time zone,YES,now()
+visits,updated_at,timestamp with time zone,YES,now()
+waitlist,id,bigint,NO,null
+waitlist,email,text,NO,null
+waitlist,created_at,timestamp with time zone,NO,now()
+want_to_try,id,uuid,NO,gen_random_uuid()
+want_to_try,user_id,uuid,NO,null
+want_to_try,chain_id,uuid,NO,null
+want_to_try,created_at,timestamp with time zone,YES,now()
